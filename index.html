@@ -159,7 +159,7 @@
 
     <!-- JavaScript -->
     <script>
-        // 종이접기 데이터베이스 (업로드된 이미지 파일명 번호로 매핑)
+        // 종이접기 데이터베이스 (한글 파일명으로 정정)
         const origamiData = [
             {
                 id: 'cicada',
@@ -169,10 +169,10 @@
                 diffClass: 'bg-green-100 text-green-700',
                 headerClass: 'bg-green-600',
                 iconType: 'image',
-                iconBase: '51353', // 매미 이미지 번호
+                iconBase: '매미', 
                 desc: '여름 숲의 대표적인 곤충',
                 tip: '완성 후 진짜 나무껍질 위에 올려놓고 보호색에 대해 이야기해 보세요.',
-                imageId: 'cicada', // 도안 이미지 파일명 (cicada.jpg)
+                imageId: 'cicada', 
                 steps: [
                     "색종이를 세모 모양으로 반 접습니다. (역삼각형 모양이 되도록 놓습니다.)",
                     "삼각형의 왼쪽 꼭짓점을 아래 꼭짓점을 향해 접어 내립니다.",
@@ -193,10 +193,10 @@
                 diffClass: 'bg-green-100 text-green-700',
                 headerClass: 'bg-earth-500',
                 iconType: 'image',
-                iconBase: '51354', // 도토리 이미지 번호
+                iconBase: '도토리', 
                 desc: '다람쥐와 청설모의 소중한 겨울 식량',
                 tip: '갈색 양면 색종이를 사용하면 뚜껑과 몸통의 색을 예쁘게 나눌 수 있습니다.',
-                imageId: 'acorn', // 도안 이미지 파일명 (acorn.jpg)
+                imageId: 'acorn', 
                 steps: [
                     "색종이를 네모 모양으로 반 접었다가 펴서 세로 중심선을 만듭니다.",
                     "가로로도 반 접었다가 펴서 십자 모양의 선을 만듭니다.",
@@ -217,10 +217,10 @@
                 diffClass: 'bg-orange-100 text-orange-700',
                 headerClass: 'bg-orange-500',
                 iconType: 'image',
-                iconBase: '51350', // 여우 이미지 번호
+                iconBase: '여우', 
                 desc: '동화 속에 자주 등장하는 영리한 친구',
                 tip: '다 접은 후 사인펜으로 눈과 코를 그리고, 막대를 붙여 역할극에 활용해 보세요.',
-                imageId: 'fox', // 도안 이미지 파일명 (fox.jpg)
+                imageId: 'fox', 
                 steps: [
                     "주황색 색종이를 세모 모양으로 반 접습니다. (삼각형의 뾰족한 부분이 아래를 향하게)",
                     "삼각형의 왼쪽 꼭짓점을 아래 꼭짓점을 향해 접어 내립니다.",
@@ -241,10 +241,10 @@
                 diffClass: 'bg-orange-100 text-orange-700',
                 headerClass: 'bg-pink-500',
                 iconType: 'image',
-                iconBase: '51351', // 나비 이미지 번호
+                iconBase: '나비', 
                 desc: '꽃들의 수분을 돕는 아름다운 곤충',
                 tip: '꽃의 번식과 곤충의 공생 관계(꽃가루받이)를 설명할 때 활용하기 좋습니다.',
-                imageId: 'butterfly', // 도안 이미지 파일명 (butterfly.jpg)
+                imageId: 'butterfly', 
                 steps: [
                     "색종이를 네모로 반 접었다 펴서 세로 선을 만듭니다.",
                     "대각선(세모)으로도 양쪽 모두 접었다 펴서 선을 만듭니다.",
@@ -265,10 +265,10 @@
                 diffClass: 'bg-red-100 text-red-700',
                 headerClass: 'bg-indigo-600',
                 iconType: 'image',
-                iconBase: '51352', // 부엉이 이미지 번호
+                iconBase: '부엉이', 
                 desc: '숲의 최상위 포식자이자 야행성 맹금류',
                 tip: '먹이그물(Food Web) 교육 시 최상위 포식자의 역할에 대해 토론해 보세요.',
-                imageId: 'owl', // 도안 이미지 파일명 (owl.jpg)
+                imageId: 'owl', 
                 steps: [
                     "색종이를 대각선으로 반 접었다 펴서 선을 만듭니다.",
                     "중심선에 맞춰 양옆 가장자리를 안으로 접어 아이스크림 접기를 합니다.",
@@ -289,10 +289,10 @@
                 diffClass: 'bg-red-100 text-red-700',
                 headerClass: 'bg-slate-800',
                 iconType: 'image',
-                iconBase: '51355', // 사슴벌레 이미지 번호
+                iconBase: '사슴벌레', 
                 desc: '참나무 수액을 좋아하는 갑충',
                 tip: '곤충의 머리, 가슴, 배 구조와 큰 턱의 용도에 대해 관찰해 보세요.',
-                imageId: 'stag-beetle', // 도안 이미지 파일명 (stag-beetle.jpg)
+                imageId: 'stag-beetle', 
                 steps: [
                     "네모와 세모로 모두 접었다 편 후, 사각 주머니 기본형을 만듭니다.",
                     "양쪽을 모아 접은 후 위로 올려 접어 학 접기 기본형을 만듭니다.",
@@ -322,10 +322,9 @@
                 card.className = 'bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden card-hover cursor-pointer flex flex-col h-full group';
                 card.onclick = () => openModal(item);
 
-                // 원형 배경과 흰색 테두리 삭제, 이미지가 자연스럽게 떠 있도록(drop-shadow) 렌더링
-                // 업로드된 파일이 .png 이므로 .png 먼저 로드, 없으면 .jpg 로드
                 let iconDisplay = '';
                 if (item.iconType === 'image') {
+                    // .png 우선, 없으면 .jpg
                     iconDisplay = `<img src="${item.iconBase}.png" onerror="this.onerror=null; this.src='${item.iconBase}.jpg';" alt="${item.itemName}" class="w-36 h-36 md:w-48 md:h-48 object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-300">`;
                 } else {
                     iconDisplay = `<span class="text-8xl md:text-9xl group-hover:scale-110 transition-transform duration-300 drop-shadow-md">${item.icon}</span>`;
@@ -378,7 +377,6 @@
             
             const modalIconContainer = document.getElementById('modal-icon');
             if (item.iconType === 'image') {
-                // 모달 헤더에서도 배경이나 테두리 없이 깔끔하게 표시
                 modalIconContainer.innerHTML = `<img src="${item.iconBase}.png" onerror="this.onerror=null; this.src='${item.iconBase}.jpg';" alt="${item.itemName}" class="w-full h-full object-contain drop-shadow-md">`;
                 modalIconContainer.className = "flex items-center justify-center w-20 h-20 md:w-24 md:h-24"; 
             } else {
@@ -395,7 +393,6 @@
             document.getElementById('modal-desc').innerText = item.desc;
             document.getElementById('modal-tip').innerText = item.tip;
 
-            // 도안(설명서) 이미지 설정 (.jpg를 기본으로 하되 .png 허용)
             const modalImage = document.getElementById('modal-image');
             const modalPlaceholder = document.getElementById('modal-placeholder');
             const imageText = document.getElementById('modal-image-text');
@@ -405,7 +402,7 @@
             imageText.innerText = '도안 이미지를 불러오는 중...';
 
             if (item.imageId) {
-                // 도안 이미지는 프롬프트 기반 생성이므로 .jpg 우선 시도
+                // 도안 이미지는 프롬프트 생성이므로 .jpg 우선
                 modalImage.src = `${item.imageId}.jpg`;
                 modalImage.alt = `${item.title} 도안`;
                 
@@ -447,7 +444,7 @@
                 stepsContainer.appendChild(stepDiv);
             });
 
-            // 모달 열기 애니메이션
+            // 모달 애니메이션
             modalBackdrop.classList.remove('hidden');
             setTimeout(() => {
                 modalBackdrop.classList.remove('opacity-0');
@@ -459,7 +456,6 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // 모달 닫기
         function closeModal() {
             modalBackdrop.classList.remove('opacity-100');
             modalBackdrop.classList.add('opacity-0');
