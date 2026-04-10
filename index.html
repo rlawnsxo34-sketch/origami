@@ -43,7 +43,7 @@
         }
         .card-hover:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 15px -6px rgba(0, 0, 0, 0.1);
         }
         body {
             background-color: #f8fafc;
@@ -107,7 +107,7 @@
             <!-- Modal Header -->
             <div id="modal-header" class="px-8 py-6 flex justify-between items-center text-white">
                 <div class="flex items-center gap-4">
-                    <span id="modal-icon" class="text-5xl bg-white/20 p-3 rounded-full w-20 h-20 flex items-center justify-center drop-shadow-sm"></span>
+                    <div id="modal-icon" class="flex items-center justify-center"></div>
                     <h2 id="modal-title" class="text-3xl md:text-5xl font-title tracking-wide"></h2>
                 </div>
                 <button onclick="closeModal()" class="text-white hover:text-gray-200 transition">
@@ -122,14 +122,12 @@
                     <span id="modal-desc" class="text-slate-600 text-xl"></span>
                 </div>
 
-                <!-- 도안 이미지 영역 추가 -->
+                <!-- 도안 이미지 영역 -->
                 <div id="modal-image-container" class="mb-10 w-full h-80 md:h-[500px] rounded-2xl shadow-inner border border-slate-200 overflow-hidden relative bg-slate-200 flex items-center justify-center p-2">
-                    <!-- 실제 이미지가 있을 경우 보여질 태그 -->
                     <img id="modal-image" src="" alt="도안" class="absolute inset-0 w-full h-full object-contain hidden">
-                    <!-- 이미지가 없을 경우 보여질 플레이스홀더 -->
                     <div id="modal-placeholder" class="flex flex-col items-center text-slate-500 z-10">
                         <i class="far fa-image text-7xl mb-4 text-slate-400"></i>
-                        <span id="modal-image-text" class="font-bold text-xl md:text-2xl tracking-wide bg-white/90 px-6 py-3 rounded-xl shadow-sm"></span>
+                        <span id="modal-image-text" class="font-bold text-xl md:text-2xl tracking-wide bg-white/90 px-6 py-3 rounded-xl shadow-sm text-center"></span>
                     </div>
                 </div>
 
@@ -161,7 +159,7 @@
 
     <!-- JavaScript -->
     <script>
-        // 종이접기 데이터베이스
+        // 종이접기 데이터베이스 (업로드된 이미지 파일명 번호로 매핑)
         const origamiData = [
             {
                 id: 'cicada',
@@ -171,10 +169,10 @@
                 diffClass: 'bg-green-100 text-green-700',
                 headerClass: 'bg-green-600',
                 iconType: 'image',
-                iconBase: '매미', 
+                iconBase: '51353', // 매미 이미지 번호
                 desc: '여름 숲의 대표적인 곤충',
                 tip: '완성 후 진짜 나무껍질 위에 올려놓고 보호색에 대해 이야기해 보세요.',
-                imageId: 'cicada', 
+                imageId: 'cicada', // 도안 이미지 파일명 (cicada.jpg)
                 steps: [
                     "색종이를 세모 모양으로 반 접습니다. (역삼각형 모양이 되도록 놓습니다.)",
                     "삼각형의 왼쪽 꼭짓점을 아래 꼭짓점을 향해 접어 내립니다.",
@@ -195,10 +193,10 @@
                 diffClass: 'bg-green-100 text-green-700',
                 headerClass: 'bg-earth-500',
                 iconType: 'image',
-                iconBase: '도토리',
+                iconBase: '51354', // 도토리 이미지 번호
                 desc: '다람쥐와 청설모의 소중한 겨울 식량',
                 tip: '갈색 양면 색종이를 사용하면 뚜껑과 몸통의 색을 예쁘게 나눌 수 있습니다.',
-                imageId: 'acorn',
+                imageId: 'acorn', // 도안 이미지 파일명 (acorn.jpg)
                 steps: [
                     "색종이를 네모 모양으로 반 접었다가 펴서 세로 중심선을 만듭니다.",
                     "가로로도 반 접었다가 펴서 십자 모양의 선을 만듭니다.",
@@ -218,11 +216,11 @@
                 difficulty: '중급',
                 diffClass: 'bg-orange-100 text-orange-700',
                 headerClass: 'bg-orange-500',
-                iconType: 'image', // 여우 이미지 적용
-                iconBase: '여우',
+                iconType: 'image',
+                iconBase: '51350', // 여우 이미지 번호
                 desc: '동화 속에 자주 등장하는 영리한 친구',
                 tip: '다 접은 후 사인펜으로 눈과 코를 그리고, 막대를 붙여 역할극에 활용해 보세요.',
-                imageId: 'fox',
+                imageId: 'fox', // 도안 이미지 파일명 (fox.jpg)
                 steps: [
                     "주황색 색종이를 세모 모양으로 반 접습니다. (삼각형의 뾰족한 부분이 아래를 향하게)",
                     "삼각형의 왼쪽 꼭짓점을 아래 꼭짓점을 향해 접어 내립니다.",
@@ -242,11 +240,11 @@
                 difficulty: '중급',
                 diffClass: 'bg-orange-100 text-orange-700',
                 headerClass: 'bg-pink-500',
-                iconType: 'image', // 나비 이미지 적용
-                iconBase: '나비',
+                iconType: 'image',
+                iconBase: '51351', // 나비 이미지 번호
                 desc: '꽃들의 수분을 돕는 아름다운 곤충',
                 tip: '꽃의 번식과 곤충의 공생 관계(꽃가루받이)를 설명할 때 활용하기 좋습니다.',
-                imageId: 'butterfly',
+                imageId: 'butterfly', // 도안 이미지 파일명 (butterfly.jpg)
                 steps: [
                     "색종이를 네모로 반 접었다 펴서 세로 선을 만듭니다.",
                     "대각선(세모)으로도 양쪽 모두 접었다 펴서 선을 만듭니다.",
@@ -266,11 +264,11 @@
                 difficulty: '고급',
                 diffClass: 'bg-red-100 text-red-700',
                 headerClass: 'bg-indigo-600',
-                iconType: 'image', // 부엉이 이미지 적용
-                iconBase: '부엉이',
+                iconType: 'image',
+                iconBase: '51352', // 부엉이 이미지 번호
                 desc: '숲의 최상위 포식자이자 야행성 맹금류',
                 tip: '먹이그물(Food Web) 교육 시 최상위 포식자의 역할에 대해 토론해 보세요.',
-                imageId: 'owl',
+                imageId: 'owl', // 도안 이미지 파일명 (owl.jpg)
                 steps: [
                     "색종이를 대각선으로 반 접었다 펴서 선을 만듭니다.",
                     "중심선에 맞춰 양옆 가장자리를 안으로 접어 아이스크림 접기를 합니다.",
@@ -291,10 +289,10 @@
                 diffClass: 'bg-red-100 text-red-700',
                 headerClass: 'bg-slate-800',
                 iconType: 'image',
-                iconBase: '사슴벌레',
+                iconBase: '51355', // 사슴벌레 이미지 번호
                 desc: '참나무 수액을 좋아하는 갑충',
                 tip: '곤충의 머리, 가슴, 배 구조와 큰 턱의 용도에 대해 관찰해 보세요.',
-                imageId: 'stag-beetle',
+                imageId: 'stag-beetle', // 도안 이미지 파일명 (stag-beetle.jpg)
                 steps: [
                     "네모와 세모로 모두 접었다 편 후, 사각 주머니 기본형을 만듭니다.",
                     "양쪽을 모아 접은 후 위로 올려 접어 학 접기 기본형을 만듭니다.",
@@ -324,17 +322,17 @@
                 card.className = 'bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden card-hover cursor-pointer flex flex-col h-full group';
                 card.onclick = () => openModal(item);
 
-                // 이모지와 실제 이미지 구분하여 렌더링 (.jpg 먼저 시도 후 .png 로드 fallback 설정)
+                // 원형 배경과 흰색 테두리 삭제, 이미지가 자연스럽게 떠 있도록(drop-shadow) 렌더링
+                // 업로드된 파일이 .png 이므로 .png 먼저 로드, 없으면 .jpg 로드
                 let iconDisplay = '';
                 if (item.iconType === 'image') {
-                    // object-cover 대신 object-contain 적용, bg-white와 p-2 추가하여 이미지 잘림 방지
-                    iconDisplay = `<img src="${item.iconBase}.jpg" onerror="this.onerror=null; this.src='${item.iconBase}.png';" alt="${item.itemName}" class="w-32 h-32 md:w-40 md:h-40 object-contain bg-white rounded-full shadow-lg group-hover:scale-110 transition-transform duration-300 border-4 border-white/50 p-2">`;
+                    iconDisplay = `<img src="${item.iconBase}.png" onerror="this.onerror=null; this.src='${item.iconBase}.jpg';" alt="${item.itemName}" class="w-36 h-36 md:w-48 md:h-48 object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-300">`;
                 } else {
                     iconDisplay = `<span class="text-8xl md:text-9xl group-hover:scale-110 transition-transform duration-300 drop-shadow-md">${item.icon}</span>`;
                 }
 
                 card.innerHTML = `
-                    <div class="${item.headerClass} h-48 md:h-64 flex items-center justify-center text-white relative">
+                    <div class="${item.headerClass} h-56 md:h-72 flex items-center justify-center text-white relative">
                         ${iconDisplay}
                         <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-base md:text-lg font-bold shadow-sm">
                             ${item.difficulty}
@@ -354,7 +352,6 @@
 
         // 필터링 함수
         function filterItems(difficulty) {
-            // 버튼 스타일 업데이트
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => {
                 if(btn.innerText.includes(difficulty) || (difficulty === '전체' && btn.innerText === '전체보기')) {
@@ -364,7 +361,6 @@
                 }
             });
 
-            // 데이터 필터링
             if (difficulty === '전체') {
                 renderGrid(origamiData);
             } else {
@@ -373,24 +369,21 @@
             }
         }
 
-        // 모달 제어 변수
         const modalBackdrop = document.getElementById('modal-backdrop');
         const modalContent = document.getElementById('modal-content');
 
         // 모달 열기
         function openModal(item) {
-            // 모달 내용 채우기
             document.getElementById('modal-header').className = `px-8 py-6 flex justify-between items-center text-white ${item.headerClass}`;
             
-            // 모달 내부 아이콘(또는 이미지) 적용 (.jpg 먼저 시도 후 .png 로드 fallback 설정)
             const modalIconContainer = document.getElementById('modal-icon');
             if (item.iconType === 'image') {
-                // object-contain과 bg-white, p-1 적용하여 모달 상단 아이콘도 잘리지 않게 설정
-                modalIconContainer.innerHTML = `<img src="${item.iconBase}.jpg" onerror="this.onerror=null; this.src='${item.iconBase}.png';" alt="${item.itemName}" class="w-full h-full object-contain bg-white rounded-full p-1">`;
-                modalIconContainer.classList.remove('p-3'); 
+                // 모달 헤더에서도 배경이나 테두리 없이 깔끔하게 표시
+                modalIconContainer.innerHTML = `<img src="${item.iconBase}.png" onerror="this.onerror=null; this.src='${item.iconBase}.jpg';" alt="${item.itemName}" class="w-full h-full object-contain drop-shadow-md">`;
+                modalIconContainer.className = "flex items-center justify-center w-20 h-20 md:w-24 md:h-24"; 
             } else {
                 modalIconContainer.innerHTML = item.icon;
-                modalIconContainer.classList.add('p-3'); 
+                modalIconContainer.className = "text-5xl bg-white/20 p-3 rounded-full w-20 h-20 flex items-center justify-center drop-shadow-sm"; 
             }
 
             document.getElementById('modal-title').innerText = item.title;
@@ -402,36 +395,30 @@
             document.getElementById('modal-desc').innerText = item.desc;
             document.getElementById('modal-tip').innerText = item.tip;
 
-            // 도안 이미지 설정 (jpg 시도 후 실패시 png 시도)
+            // 도안(설명서) 이미지 설정 (.jpg를 기본으로 하되 .png 허용)
             const modalImage = document.getElementById('modal-image');
             const modalPlaceholder = document.getElementById('modal-placeholder');
             const imageText = document.getElementById('modal-image-text');
             
-            // 초기화 (일단 숨김)
             modalImage.classList.add('hidden');
             modalPlaceholder.classList.remove('hidden');
             imageText.innerText = '도안 이미지를 불러오는 중...';
 
             if (item.imageId) {
-                // 1. jpg 파일 로드 시도
+                // 도안 이미지는 프롬프트 기반 생성이므로 .jpg 우선 시도
                 modalImage.src = `${item.imageId}.jpg`;
                 modalImage.alt = `${item.title} 도안`;
                 
-                // 로드 성공 시
                 modalImage.onload = function() {
                     modalImage.classList.remove('hidden');
                     modalPlaceholder.classList.add('hidden');
                 };
 
-                // 로드 실패 시 (.jpg가 없을 때)
                 modalImage.onerror = function() {
-                    // 무한 루프 방지: onerror 핸들러 초기화
-                    this.onerror = null;
-                    // .jpg에서 에러가 났다면 .png로 주소 변경
+                    this.onerror = null; // 무한 루프 방지
                     if (this.src.endsWith('.jpg')) {
-                        this.src = `${item.imageId}.png`;
+                        this.src = `${item.imageId}.png`; // .png로 재시도
                         
-                        // .png 마저 실패할 경우를 대비한 새로운 onload/onerror 세팅
                         this.onload = function() {
                             modalImage.classList.remove('hidden');
                             modalPlaceholder.classList.add('hidden');
@@ -439,7 +426,7 @@
                         this.onerror = function() {
                             this.classList.add('hidden');
                             modalPlaceholder.classList.remove('hidden');
-                            imageText.innerText = `[ ${item.imageId}.jpg ] 또는 [ ${item.imageId}.png ] 파일을 넣어주세요.`;
+                            imageText.innerHTML = `<strong>${item.title}</strong> 도안 파일<br>(${item.imageId}.jpg 또는 .png)을 추가해주세요.`;
                         }
                     }
                 };
@@ -460,9 +447,8 @@
                 stepsContainer.appendChild(stepDiv);
             });
 
-            // 애니메이션과 함께 보이기
+            // 모달 열기 애니메이션
             modalBackdrop.classList.remove('hidden');
-            // 약간의 딜레이를 주어 transition이 작동하게 함
             setTimeout(() => {
                 modalBackdrop.classList.remove('opacity-0');
                 modalBackdrop.classList.add('opacity-100');
@@ -470,7 +456,6 @@
                 modalContent.classList.add('scale-100');
             }, 10);
             
-            // body 스크롤 방지
             document.body.style.overflow = 'hidden';
         }
 
@@ -483,23 +468,16 @@
             
             setTimeout(() => {
                 modalBackdrop.classList.add('hidden');
-                // body 스크롤 복구
                 document.body.style.overflow = 'auto';
-            }, 300); // CSS transition 시간과 맞춤
+            }, 300);
         }
 
-        // 모달 바깥 배경 클릭 시 닫기
         modalBackdrop.addEventListener('click', (e) => {
-            if (e.target === modalBackdrop) {
-                closeModal();
-            }
+            if (e.target === modalBackdrop) closeModal();
         });
 
-        // ESC 키 누르면 모달 닫기
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modalBackdrop.classList.contains('hidden')) {
-                closeModal();
-            }
+            if (e.key === 'Escape' && !modalBackdrop.classList.contains('hidden')) closeModal();
         });
     </script>
 </body>
