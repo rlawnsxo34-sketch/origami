@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숲속 종이접기 교실</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Jua&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                        title: ['"Jua"', 'sans-serif'],
+                    },
+                    colors: {
+                        forest: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        earth: {
+                            500: '#b45309',
+                            800: '#78350f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 부드러운 전환 효과 */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .modal-enter {
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* 탭 스크롤 숨기기 */
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased font-sans">
+
+    <!-- Header -->
+    <header class="bg-forest-800 text-white py-16 px-6 shadow-md relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <i class="fas fa-tree absolute text-9xl -left-10 -bottom-10"></i>
+            <i class="fas fa-leaf absolute text-8xl right-10 top-5 rotate-45"></i>
+        </div>
+        <div class="max-w-7xl mx-auto relative z-10 text-center flex flex-col items-center">
+            <!-- 국립장성숲체원 로고 삽입 -->
+            <div class="bg-white/95 backdrop-blur-sm px-8 py-4 rounded-3xl shadow-sm mb-8 inline-block">
+                <img src="logo_jangseong.png" alt="한국산림복지진흥원 국립장성숲체원" class="h-16 md:h-24 object-contain">
+            </div>
+            <h1 class="text-5xl md:text-7xl font-title mb-6 tracking-wider">🌿 숲속 종이접기 교실</h1>
+            <p class="text-forest-100 text-xl md:text-3xl font-light">자연을 닮은 종이접기로 숲의 생태를 재미있게 배워보아요!</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12 pb-4 overflow-x-auto hide-scroll">
+            <button onclick="filterItems('전체')" class="filter-btn active bg-forest-600 text-white px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-forest-700">전체보기</button>
+            <button onclick="filterItems('초급')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-green-50 hover:text-green-700">🌱 초급</button>
+            <button onclick="filterItems('중급')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-orange-50 hover:text-orange-700">🌲 중급</button>
+            <button onclick="filterItems('고급')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-red-50 hover:text-red-700">🦅 고급</button>
+        </div>
+
+        <!-- Origami Grid -->
+        <div id="origami-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- Cards will be dynamically injected here by JS -->
+        </div>
+
+    </main>
+
+    <!-- Modal (Hidden by default) -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div id="modal-content" class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col transform scale-95 transition-transform duration-300">
+            
+            <!-- Modal Header -->
+            <div id="modal-header" class="px-8 py-6 flex justify-between items-center text-white">
+                <div class="flex items-center gap-4">
+                    <span id="modal-icon" class="text-5xl bg-white/20 p-3 rounded-full w-20 h-20 flex items-center justify-center drop-shadow-sm"></span>
+                    <h2 id="modal-title" class="text-3xl md:text-5xl font-title tracking-wide"></h2>
+                </div>
+                <button onclick="closeModal()" class="text-white hover:text-gray-200 transition">
+                    <i class="fas fa-times text-4xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body (Scrollable) -->
+            <div class="p-8 overflow-y-auto bg-slate-50 flex-grow">
+                <div class="flex items-center gap-3 mb-8">
+                    <span id="modal-difficulty" class="px-4 py-2 rounded-full text-lg font-bold"></span>
+                    <span id="modal-desc" class="text-slate-600 text-xl"></span>
+                </div>
+
+                <!-- 도안 이미지 영역 추가 -->
+                <div id="modal-image-container" class="mb-10 w-full h-80 md:h-[500px] rounded-2xl shadow-inner border border-slate-200 overflow-hidden relative bg-slate-200 flex items-center justify-center p-2">
+                    <!-- 실제 이미지가 있을 경우 보여질 태그 -->
+                    <img id="modal-image" src="" alt="도안" class="absolute inset-0 w-full h-full object-contain hidden">
+                    <!-- 이미지가 없을 경우 보여질 플레이스홀더 -->
+                    <div id="modal-placeholder" class="flex flex-col items-center text-slate-500 z-10">
+                        <i class="far fa-image text-7xl mb-4 text-slate-400"></i>
+                        <span id="modal-image-text" class="font-bold text-xl md:text-2xl tracking-wide bg-white/90 px-6 py-3 rounded-xl shadow-sm"></span>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-3"><i class="fas fa-list-ol mr-3 text-forest-600"></i>접는 순서</h3>
+                
+                <div id="modal-steps" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Steps will be injected here -->
+                </div>
+
+                <div class="mt-10 bg-blue-50 border border-blue-200 rounded-2xl p-6 text-lg text-blue-800 flex gap-4">
+                    <i class="fas fa-info-circle text-blue-500 mt-1 text-2xl"></i>
+                    <div>
+                        <strong class="text-xl">💡 교육 팁:</strong>
+                        <p id="modal-tip" class="mt-2 text-xl"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-white px-8 py-5 border-t border-slate-100 text-right">
+                <button onclick="closeModal()" class="bg-slate-200 text-slate-700 hover:bg-slate-300 px-8 py-3 rounded-xl text-xl font-medium transition">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-slate-400 py-10 text-center mt-12 text-lg">
+        <p>© 2026 숲속 종이접기 교실. 산림 생태 교육을 위해 제작되었습니다.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 종이접기 데이터베이스
+        const origamiData = [
+            {
+                id: 'cicada',
+                title: '맴맴 매미',
+                itemName: '매미',
+                difficulty: '초급',
+                diffClass: 'bg-green-100 text-green-700',
+                headerClass: 'bg-green-600',
+                iconType: 'image',
+                iconBase: '매미', // jpg, png 자동 호환을 위해 확장자 제거
+                desc: '여름 숲의 대표적인 곤충',
+                tip: '완성 후 진짜 나무껍질 위에 올려놓고 보호색에 대해 이야기해 보세요.',
+                imageId: 'cicada', 
+                steps: [
+                    "색종이를 세모 모양으로 반 접습니다. (역삼각형 모양이 되도록 놓습니다.)",
+                    "삼각형의 왼쪽 꼭짓점을 아래 꼭짓점을 향해 접어 내립니다.",
+                    "오른쪽 꼭짓점도 아래 꼭짓점을 향해 접어 내려 마름모를 만듭니다.",
+                    "방금 접어 내린 왼쪽 모서리를 바깥쪽을 향해 비스듬히 위로 접어 올립니다.",
+                    "오른쪽 모서리도 바깥쪽을 향해 비스듬히 위로 접어 올려 날개를 만듭니다.",
+                    "위쪽 뾰족한 모서리 두 겹 중, 첫 번째 겹만 아래로 접어 내립니다.",
+                    "두 번째 겹은 방금 접은 선보다 살짝 위쪽에 맞춰 아래로 접어 계단을 만듭니다.",
+                    "양옆의 뾰족한 모서리를 뒤로 살짝 접어 넘겨 몸통을 둥글게 만들어줍니다.",
+                    "매미 완성! 진짜 나무껍질 위에 올려놓아 보세요."
+                ]
+            },
+            {
+                id: 'acorn',
+                title: '가을 도토리',
+                itemName: '도토리',
+                difficulty: '초급',
+                diffClass: 'bg-green-100 text-green-700',
+                headerClass: 'bg-earth-500',
+                iconType: 'image',
+                iconBase: '도토리',
+                desc: '다람쥐와 청설모의 소중한 겨울 식량',
+                tip: '갈색 양면 색종이를 사용하면 뚜껑과 몸통의 색을 예쁘게 나눌 수 있습니다.',
+                imageId: 'acorn',
+                steps: [
+                    "색종이를 네모 모양으로 반 접었다가 펴서 세로 중심선을 만듭니다.",
+                    "가로로도 반 접었다가 펴서 십자 모양의 선을 만듭니다.",
+                    "색종이의 위쪽 모서리를 약 1cm 정도만 뒤로 접어 넘깁니다. (도토리 뚜껑 부분)",
+                    "종이를 그대로 뒤집어 줍니다.",
+                    "왼쪽 가장자리를 세로 중심선에 맞춰 접어줍니다.",
+                    "오른쪽 가장자리도 세로 중심선에 맞춰 대문 접기 합니다.",
+                    "아래쪽 양 끝의 직각 모서리를 작은 세모 모양으로 안으로 접어 밑동을 만듭니다.",
+                    "위쪽(뚜껑 부분) 양 끝 모서리도 뒤로 조금씩 접어 둥글게 다듬어 줍니다.",
+                    "다시 앞으로 뒤집으면 귀여운 도토리 완성!"
+                ]
+            },
+            {
+                id: 'fox',
+                title: '숲속 여우 얼굴',
+                itemName: '여우',
+                difficulty: '중급',
+                diffClass: 'bg-orange-100 text-orange-700',
+                headerClass: 'bg-orange-500',
+                iconType: 'emoji',
+                icon: '🦊',
+                desc: '동화 속에 자주 등장하는 영리한 친구',
+                tip: '다 접은 후 사인펜으로 눈과 코를 그리고, 막대를 붙여 역할극에 활용해 보세요.',
+                imageId: 'fox',
+                steps: [
+                    "주황색 색종이를 세모 모양으로 반 접습니다. (삼각형의 뾰족한 부분이 아래를 향하게)",
+                    "삼각형의 왼쪽 꼭짓점을 아래 꼭짓점을 향해 접어 내립니다.",
+                    "오른쪽 꼭짓점도 아래 꼭짓점을 향해 접어 내려 마름모를 만듭니다.",
+                    "방금 접어 내린 왼쪽 모서리를 바깥쪽을 향해 비스듬히(약 45도) 위로 접어 올립니다.",
+                    "오른쪽 모서리도 똑같이 바깥쪽 위로 접어 올려 양쪽 귀를 만듭니다.",
+                    "귀가 접힌 모양 그대로 종이를 뒤집어 줍니다.",
+                    "얼굴 가운데 뾰족하게 튀어나온 부분을 살짝 아래로 접어 코를 만듭니다.",
+                    "사인펜으로 까만 코와 예쁜 눈을 그려줍니다.",
+                    "숲속 여우 얼굴 완성!"
+                ]
+            },
+            {
+                id: 'butterfly',
+                title: '봄나들이 나비',
+                itemName: '나비',
+                difficulty: '중급',
+                diffClass: 'bg-orange-100 text-orange-700',
+                headerClass: 'bg-pink-500',
+                iconType: 'emoji',
+                icon: '🦋',
+                desc: '꽃들의 수분을 돕는 아름다운 곤충',
+                tip: '꽃의 번식과 곤충의 공생 관계(꽃가루받이)를 설명할 때 활용하기 좋습니다.',
+                imageId: 'butterfly',
+                steps: [
+                    "색종이를 네모로 반 접었다 펴서 세로 선을 만듭니다.",
+                    "대각선(세모)으로도 양쪽 모두 접었다 펴서 선을 만듭니다.",
+                    "선에 맞춰 양옆을 밀어 넣어 삼각 주머니 접기를 합니다.",
+                    "앞장의 왼쪽 모서리를 위쪽 꼭짓점을 향해 올려 접습니다.",
+                    "앞장의 오른쪽 모서리도 위쪽 꼭짓점을 향해 올려 접어줍니다.",
+                    "종이를 그대로 뒤집습니다.",
+                    "아래쪽 뾰족한 모서리를 위로 접어 올립니다. (이때 모서리가 종이 위로 튀어나오게 합니다.)",
+                    "위로 튀어나온 작은 모서리를 앞으로 꺾어 접어 고정시켜 줍니다.",
+                    "반으로 살짝 접었다 펴서 입체감을 주면 봄나들이 나비 완성!"
+                ]
+            },
+            {
+                id: 'owl',
+                title: '밤의 파수꾼 부엉이',
+                itemName: '부엉이',
+                difficulty: '고급',
+                diffClass: 'bg-red-100 text-red-700',
+                headerClass: 'bg-indigo-600',
+                iconType: 'emoji',
+                icon: '🦉',
+                desc: '숲의 최상위 포식자이자 야행성 맹금류',
+                tip: '먹이그물(Food Web) 교육 시 최상위 포식자의 역할에 대해 토론해 보세요.',
+                imageId: 'owl',
+                steps: [
+                    "색종이를 대각선으로 반 접었다 펴서 선을 만듭니다.",
+                    "중심선에 맞춰 양옆 가장자리를 안으로 접어 아이스크림 접기를 합니다.",
+                    "위쪽에 남은 뾰족한 삼각형을 아래로 접어 내립니다.",
+                    "아래로 내린 삼각형의 양옆을 안쪽으로 모아 접으며 입체적인 부리를 만듭니다.",
+                    "아래쪽 뾰족한 부분을 위로 꺾어 접어 올립니다.",
+                    "방금 올린 부분을 다시 아래로 살짝 계단 접기하여 꼬리깃털을 표현합니다.",
+                    "숨겨져 있던 왼쪽 모서리를 바깥으로 빼내어 날개를 만듭니다.",
+                    "오른쪽 모서리도 바깥으로 빼내어 양쪽 날개를 완성합니다.",
+                    "눈을 크게 그려주면 밤의 파수꾼 부엉이 완성!"
+                ]
+            },
+            {
+                id: 'stag-beetle',
+                title: '튼튼한 사슴벌레',
+                itemName: '사슴벌레',
+                difficulty: '고급',
+                diffClass: 'bg-red-100 text-red-700',
+                headerClass: 'bg-slate-800',
+                iconType: 'image',
+                iconBase: '사슴벌레',
+                desc: '참나무 수액을 좋아하는 갑충',
+                tip: '곤충의 머리, 가슴, 배 구조와 큰 턱의 용도에 대해 관찰해 보세요.',
+                imageId: 'stag-beetle',
+                steps: [
+                    "네모와 세모로 모두 접었다 편 후, 사각 주머니 기본형을 만듭니다.",
+                    "양쪽을 모아 접은 후 위로 올려 접어 학 접기 기본형을 만듭니다.",
+                    "위쪽 두 갈래 중 왼쪽을 바깥쪽으로 꺾어 접어 큰 턱(집게)을 만듭니다.",
+                    "오른쪽도 바깥쪽으로 꺾어 양쪽 턱을 완성합니다.",
+                    "아래쪽 뾰족한 부분을 위로 접어 올립니다.",
+                    "올린 부분을 다시 아래로 계단 접기하여 짧은 배 부분을 만듭니다.",
+                    "몸통 양옆을 안쪽으로 접어 날씬하고 단단한 갑옷 형태를 잡습니다.",
+                    "남은 여분의 모서리들을 바깥으로 꺾어 접어 다리를 표현합니다.",
+                    "튼튼한 뿔을 가진 사슴벌레 완성!"
+                ]
+            }
+        ];
+
+        // 초기 렌더링
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGrid(origamiData);
+        });
+
+        // 카드 렌더링 함수
+        function renderGrid(data) {
+            const grid = document.getElementById('origami-grid');
+            grid.innerHTML = ''; // 초기화
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden card-hover cursor-pointer flex flex-col h-full group';
+                card.onclick = () => openModal(item);
+
+                // 이모지와 실제 이미지 구분하여 렌더링 (.jpg 먼저 시도 후 .png 로드 fallback 설정)
+                let iconDisplay = '';
+                if (item.iconType === 'image') {
+                    iconDisplay = `<img src="${item.iconBase}.jpg" onerror="this.onerror=null; this.src='${item.iconBase}.png';" alt="${item.itemName}" class="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full shadow-lg group-hover:scale-110 transition-transform duration-300 border-4 border-white/30">`;
+                } else {
+                    iconDisplay = `<span class="text-8xl md:text-9xl group-hover:scale-110 transition-transform duration-300 drop-shadow-md">${item.icon}</span>`;
+                }
+
+                card.innerHTML = `
+                    <div class="${item.headerClass} h-48 md:h-64 flex items-center justify-center text-white relative">
+                        ${iconDisplay}
+                        <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-base md:text-lg font-bold shadow-sm">
+                            ${item.difficulty}
+                        </div>
+                    </div>
+                    <div class="p-6 md:p-8 flex flex-col flex-grow">
+                        <h3 class="text-2xl md:text-4xl font-bold text-slate-800 mb-2 font-title">${item.title}</h3>
+                        <p class="text-slate-500 text-lg md:text-xl mb-6 line-clamp-2 flex-grow">${item.desc}</p>
+                        <button class="w-full py-4 text-xl md:text-2xl bg-slate-50 text-forest-600 font-semibold rounded-2xl border border-slate-200 hover:bg-forest-50 hover:border-forest-200 transition">
+                            <i class="far fa-map mr-2"></i>도안 보기
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 필터링 함수
+        function filterItems(difficulty) {
+            // 버튼 스타일 업데이트
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                if(btn.innerText.includes(difficulty) || (difficulty === '전체' && btn.innerText === '전체보기')) {
+                    btn.className = 'filter-btn active bg-forest-600 text-white px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-forest-700';
+                } else {
+                    btn.className = 'filter-btn bg-white text-slate-600 border border-slate-200 px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-slate-50 hover:text-forest-600';
+                }
+            });
+
+            // 데이터 필터링
+            if (difficulty === '전체') {
+                renderGrid(origamiData);
+            } else {
+                const filtered = origamiData.filter(item => item.difficulty === difficulty);
+                renderGrid(filtered);
+            }
+        }
+
+        // 모달 제어 변수
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const modalContent = document.getElementById('modal-content');
+
+        // 모달 열기
+        function openModal(item) {
+            // 모달 내용 채우기
+            document.getElementById('modal-header').className = `px-8 py-6 flex justify-between items-center text-white ${item.headerClass}`;
+            
+            // 모달 내부 아이콘(또는 이미지) 적용 (.jpg 먼저 시도 후 .png 로드 fallback 설정)
+            const modalIconContainer = document.getElementById('modal-icon');
+            if (item.iconType === 'image') {
+                modalIconContainer.innerHTML = `<img src="${item.iconBase}.jpg" onerror="this.onerror=null; this.src='${item.iconBase}.png';" alt="${item.itemName}" class="w-full h-full object-cover rounded-full">`;
+                modalIconContainer.classList.remove('p-3'); 
+            } else {
+                modalIconContainer.innerHTML = item.icon;
+                modalIconContainer.classList.add('p-3'); 
+            }
+
+            document.getElementById('modal-title').innerText = item.title;
+            
+            const diffBadge = document.getElementById('modal-difficulty');
+            diffBadge.innerText = item.difficulty;
+            diffBadge.className = `px-4 py-2 rounded-full text-lg font-bold ${item.diffClass}`;
+            
+            document.getElementById('modal-desc').innerText = item.desc;
+            document.getElementById('modal-tip').innerText = item.tip;
+
+            // 도안 이미지 설정 (jpg 시도 후 실패시 png 시도)
+            const modalImage = document.getElementById('modal-image');
+            const modalPlaceholder = document.getElementById('modal-placeholder');
+            const imageText = document.getElementById('modal-image-text');
+            
+            // 초기화 (일단 숨김)
+            modalImage.classList.add('hidden');
+            modalPlaceholder.classList.remove('hidden');
+            imageText.innerText = '도안 이미지를 불러오는 중...';
+
+            if (item.imageId) {
+                // 1. jpg 파일 로드 시도
+                modalImage.src = `${item.imageId}.jpg`;
+                modalImage.alt = `${item.title} 도안`;
+                
+                // 로드 성공 시
+                modalImage.onload = function() {
+                    modalImage.classList.remove('hidden');
+                    modalPlaceholder.classList.add('hidden');
+                };
+
+                // 로드 실패 시 (.jpg가 없을 때)
+                modalImage.onerror = function() {
+                    // .jpg에서 에러가 났다면 .png로 주소 변경
+                    if (this.src.endsWith('.jpg')) {
+                        this.src = `${item.imageId}.png`;
+                    } else {
+                        // .png 마저 에러가 났다면 플레이스홀더 표시
+                        this.classList.add('hidden');
+                        modalPlaceholder.classList.remove('hidden');
+                        imageText.innerText = `[ ${item.imageId}.jpg ] 또는 [ ${item.imageId}.png ] 파일을 넣어주세요.`;
+                    }
+                };
+            }
+
+            // 단계(Steps) 생성
+            const stepsContainer = document.getElementById('modal-steps');
+            stepsContainer.innerHTML = '';
+            item.steps.forEach((step, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'bg-white border border-slate-200 rounded-2xl p-5 flex gap-5 shadow-sm items-center';
+                stepDiv.innerHTML = `
+                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold font-title text-2xl border border-slate-300">
+                        ${index + 1}
+                    </div>
+                    <p class="text-slate-700 leading-relaxed text-lg md:text-2xl pt-1">${step}</p>
+                `;
+                stepsContainer.appendChild(stepDiv);
+            });
+
+            // 애니메이션과 함께 보이기
+            modalBackdrop.classList.remove('hidden');
+            // 약간의 딜레이를 주어 transition이 작동하게 함
+            setTimeout(() => {
+                modalBackdrop.classList.remove('opacity-0');
+                modalBackdrop.classList.add('opacity-100');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+            
+            // body 스크롤 방지
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            modalBackdrop.classList.remove('opacity-100');
+            modalBackdrop.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modalBackdrop.classList.add('hidden');
+                // body 스크롤 복구
+                document.body.style.overflow = 'auto';
+            }, 300); // CSS transition 시간과 맞춤
+        }
+
+        // 모달 바깥 배경 클릭 시 닫기
+        modalBackdrop.addEventListener('click', (e) => {
+            if (e.target === modalBackdrop) {
+                closeModal();
+            }
+        });
+
+        // ESC 키 누르면 모달 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modalBackdrop.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
