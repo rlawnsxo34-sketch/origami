@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>숲속 종이접기 교실</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Jua&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -66,14 +63,12 @@
 </head>
 <body class="text-slate-800 antialiased font-sans">
 
-    <!-- Header -->
     <header class="bg-forest-800 text-white py-16 px-6 shadow-md relative overflow-hidden">
         <div class="absolute inset-0 opacity-10">
             <i class="fas fa-tree absolute text-9xl -left-10 -bottom-10"></i>
             <i class="fas fa-leaf absolute text-8xl right-10 top-5 rotate-45"></i>
         </div>
         <div class="max-w-7xl mx-auto relative z-10 text-center flex flex-col items-center">
-            <!-- 국립장성숲체원 로고 삽입 -->
             <div class="bg-white/95 backdrop-blur-sm px-8 py-4 rounded-3xl shadow-sm mb-8 inline-block">
                 <img src="logo_jangseong.png" alt="한국산림복지진흥원 국립장성숲체원" class="h-16 md:h-24 object-contain">
             </div>
@@ -82,10 +77,8 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-6 py-12">
         
-        <!-- Filter Controls -->
         <div class="flex flex-wrap justify-center gap-4 mb-12 pb-4 overflow-x-auto hide-scroll">
             <button onclick="filterItems('전체')" class="filter-btn active bg-forest-600 text-white px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-forest-700">전체보기</button>
             <button onclick="filterItems('초급')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-green-50 hover:text-green-700">🌱 초급</button>
@@ -93,18 +86,14 @@
             <button onclick="filterItems('고급')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-8 py-3 rounded-full text-xl md:text-2xl font-medium shadow-sm transition hover:bg-red-50 hover:text-red-700">🦅 고급</button>
         </div>
 
-        <!-- Origami Grid -->
         <div id="origami-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- Cards will be dynamically injected here by JS -->
-        </div>
+            </div>
 
     </main>
 
-    <!-- Modal (Hidden by default) -->
     <div id="modal-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div id="modal-content" class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col transform scale-95 transition-transform duration-300">
             
-            <!-- Modal Header -->
             <div id="modal-header" class="px-8 py-6 flex justify-between items-center text-white">
                 <div class="flex items-center gap-4">
                     <div id="modal-icon" class="flex items-center justify-center"></div>
@@ -115,14 +104,12 @@
                 </button>
             </div>
 
-            <!-- Modal Body (Scrollable) -->
             <div class="p-8 overflow-y-auto bg-slate-50 flex-grow">
                 <div class="flex items-center gap-3 mb-8">
                     <span id="modal-difficulty" class="px-4 py-2 rounded-full text-lg font-bold"></span>
                     <span id="modal-desc" class="text-slate-600 text-xl"></span>
                 </div>
 
-                <!-- 도안 이미지 영역 -->
                 <div id="modal-image-container" class="mb-10 w-full h-80 md:h-[500px] rounded-2xl shadow-inner border border-slate-200 overflow-hidden relative bg-slate-200 flex items-center justify-center p-2">
                     <img id="modal-image" src="" alt="도안" class="absolute inset-0 w-full h-full object-contain hidden">
                     <div id="modal-placeholder" class="flex flex-col items-center text-slate-500 z-10">
@@ -134,8 +121,7 @@
                 <h3 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-3"><i class="fas fa-list-ol mr-3 text-forest-600"></i>접는 순서</h3>
                 
                 <div id="modal-steps" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Steps will be injected here -->
-                </div>
+                    </div>
 
                 <div class="mt-10 bg-blue-50 border border-blue-200 rounded-2xl p-6 text-lg text-blue-800 flex gap-4">
                     <i class="fas fa-info-circle text-blue-500 mt-1 text-2xl"></i>
@@ -146,7 +132,6 @@
                 </div>
             </div>
 
-            <!-- Modal Footer -->
             <div class="bg-white px-8 py-5 border-t border-slate-100 text-right">
                 <button onclick="closeModal()" class="bg-slate-200 text-slate-700 hover:bg-slate-300 px-8 py-3 rounded-xl text-xl font-medium transition">닫기</button>
             </div>
@@ -157,10 +142,57 @@
         <p>© 2026 숲속 종이접기 교실. 산림 생태 교육을 위해 제작되었습니다.</p>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        // 종이접기 데이터베이스 (한글 파일명으로 정정)
+        // 종이접기 데이터베이스 (총 12가지)
         const origamiData = [
+            {
+                id: 'ladybug',
+                title: '점박이 무당벌레',
+                itemName: '무당벌레',
+                difficulty: '초급',
+                diffClass: 'bg-green-100 text-green-700',
+                headerClass: 'bg-red-500',
+                iconType: 'image',
+                iconBase: '무당벌레', 
+                desc: '진딧물을 잡아먹는 고마운 익충',
+                tip: '완성 후 검은색 펜으로 나만의 예쁜 무늬와 눈을 그려 보호색을 꾸며보세요.',
+                imageId: '무당벌레', 
+                steps: [
+                    "빨간색 색종이를 세모 모양으로 반 접었다가 폅니다.",
+                    "반대쪽으로도 세모 모양으로 반 접습니다. (역삼각형 모양이 되도록 놓습니다.)",
+                    "위쪽 양 끝 모서리를 아래 꼭짓점을 향해 조금 비스듬히 접어 내립니다.",
+                    "종이를 그대로 뒤집습니다.",
+                    "위쪽 뾰족한 꼭짓점을 아래로 약간 접어 내립니다.",
+                    "방금 접은 꼭짓점의 끝부분만 다시 위로 살짝 접어 올립니다.",
+                    "뾰족한 왼쪽과 오른쪽 모서리를 안쪽으로 조금씩 접어 둥글게 만듭니다.",
+                    "다시 앞으로 뒤집은 후, 검은색 펜으로 점무늬와 눈을 그립니다.",
+                    "진딧물을 잡아먹는 귀여운 무당벌레 완성!"
+                ]
+            },
+            {
+                id: 'mushroom',
+                title: '숲속의 요정 버섯',
+                itemName: '버섯',
+                difficulty: '초급',
+                diffClass: 'bg-green-100 text-green-700',
+                headerClass: 'bg-amber-500',
+                iconType: 'image',
+                iconBase: '버섯', 
+                desc: '낙엽을 분해하는 숲의 청소부',
+                tip: '화려한 색으로 접어 독버섯과 식용버섯의 특징을 비교해 설명해보세요.',
+                imageId: '버섯', 
+                steps: [
+                    "색종이를 네모 모양으로 반 접었다가 폅니다.",
+                    "가로로도 반 접었다가 펴서 십자 선을 만듭니다.",
+                    "위쪽, 왼쪽, 오른쪽 세 군데의 가장자리를 중심선에 맞춰 조금씩(약 1cm) 접습니다.",
+                    "종이를 그대로 뒤집습니다.",
+                    "오른쪽 가장자리를 세로 중심선에 맞춰 대문 접기 합니다.",
+                    "왼쪽 가장자리도 세로 중심선에 맞춰 대문 접기 합니다.",
+                    "위쪽 주머니를 양옆으로 벌려 눌러 접어 지붕(버섯 갓) 모양을 만듭니다.",
+                    "버섯 지붕의 뾰족한 모서리 4군데를 뒤로 살짝 접어 둥글게 다듬어 줍니다.",
+                    "앞으로 돌려 버섯 갓에 예쁜 무늬를 그려주면 숲속 버섯 완성!"
+                ]
+            },
             {
                 id: 'cicada',
                 title: '맴맴 매미',
@@ -172,7 +204,7 @@
                 iconBase: '매미', 
                 desc: '여름 숲의 대표적인 곤충',
                 tip: '완성 후 진짜 나무껍질 위에 올려놓고 보호색에 대해 이야기해 보세요.',
-                imageId: 'cicada', 
+                imageId: '매미', 
                 steps: [
                     "색종이를 세모 모양으로 반 접습니다. (역삼각형 모양이 되도록 놓습니다.)",
                     "삼각형의 왼쪽 꼭짓점을 아래 꼭짓점을 향해 접어 내립니다.",
@@ -196,7 +228,7 @@
                 iconBase: '도토리', 
                 desc: '다람쥐와 청설모의 소중한 겨울 식량',
                 tip: '갈색 양면 색종이를 사용하면 뚜껑과 몸통의 색을 예쁘게 나눌 수 있습니다.',
-                imageId: 'acorn', 
+                imageId: '도토리', 
                 steps: [
                     "색종이를 네모 모양으로 반 접었다가 펴서 세로 중심선을 만듭니다.",
                     "가로로도 반 접었다가 펴서 십자 모양의 선을 만듭니다.",
@@ -210,6 +242,54 @@
                 ]
             },
             {
+                id: 'frog',
+                title: '폴짝폴짝 개구리',
+                itemName: '개구리',
+                difficulty: '중급',
+                diffClass: 'bg-orange-100 text-orange-700',
+                headerClass: 'bg-emerald-500',
+                iconType: 'image',
+                iconBase: '개구리', 
+                desc: '숲속 계곡에 사는 양서류',
+                tip: '엉덩이 부분을 손가락으로 눌렀다 떼면 개구리가 위로 뛰어오릅니다. 멀리 뛰기 시합을 해보세요!',
+                imageId: '개구리', 
+                steps: [
+                    "초록색 색종이를 네모로 반 접어 직사각형을 만듭니다.",
+                    "윗부분을 X자로 접었다 편 후, 양옆을 눌러 삼각 주머니(물주머니) 접기를 합니다.",
+                    "삼각 주머니의 양쪽 끝 모서리를 위 꼭짓점을 향해 비스듬히 접어 올려 앞다리를 만듭니다.",
+                    "아래쪽 네모 부분의 양옆을 중심선에 맞춰 접습니다.",
+                    "아래쪽 네모 부분을 위로 반 접어 올립니다.",
+                    "위로 올린 네모 부분의 모서리를 양옆으로 벌려 배(보트) 모양으로 눌러 접습니다.",
+                    "벌려진 양쪽 모서리를 아래로 비스듬히 접어 내려 뒷다리를 만듭니다.",
+                    "개구리의 몸통 아랫부분을 계단 접기(지그재그)하여 스프링을 만듭니다.",
+                    "엉덩이를 튕기면 폴짝 뛰는 개구리 완성!"
+                ]
+            },
+            {
+                id: 'rabbit',
+                title: '귀가 쫑긋 산토끼',
+                itemName: '산토끼',
+                difficulty: '중급',
+                diffClass: 'bg-orange-100 text-orange-700',
+                headerClass: 'bg-orange-400',
+                iconType: 'image',
+                iconBase: '산토끼', 
+                desc: '먹이그물의 기초를 이루는 1차 소비자',
+                tip: '여우 종이접기와 세트로 묶어 숲속 포식자와 피식자의 생태계 놀이를 해보세요.',
+                imageId: '산토끼', 
+                steps: [
+                    "색종이를 대각선으로 반 접었다 펴서 선을 만듭니다.",
+                    "중심선에 맞춰 양옆을 접어 아이스크림 접기를 합니다.",
+                    "아래쪽 뾰족한 모서리를 위 꼭짓점에 닿도록 접어 올립니다.",
+                    "위쪽 뾰족한 꼭짓점을 아래로 약간 접어 내립니다. (토끼의 코 부분)",
+                    "종이를 그대로 반으로 접어줍니다. (산 접기)",
+                    "숨겨진 뾰족한 부분을 위로 잡아당겨 비스듬히 세워 귀를 만듭니다.",
+                    "세워진 두 귀를 가위로 살짝 자르거나 안쪽을 벌려 입체적으로 다듬습니다.",
+                    "왼쪽 아래 모서리를 안쪽으로 꺾어 접어 토끼의 둥근 꼬리를 만듭니다.",
+                    "눈을 그려주면 귀가 쫑긋한 숲속 산토끼 완성!"
+                ]
+            },
+            {
                 id: 'fox',
                 title: '숲속 여우 얼굴',
                 itemName: '여우',
@@ -220,7 +300,7 @@
                 iconBase: '여우', 
                 desc: '동화 속에 자주 등장하는 영리한 친구',
                 tip: '다 접은 후 사인펜으로 눈과 코를 그리고, 막대를 붙여 역할극에 활용해 보세요.',
-                imageId: 'fox', 
+                imageId: '여우', 
                 steps: [
                     "주황색 색종이를 세모 모양으로 반 접습니다. (삼각형의 뾰족한 부분이 아래를 향하게)",
                     "삼각형의 왼쪽 꼭짓점을 아래 꼭짓점을 향해 접어 내립니다.",
@@ -244,7 +324,7 @@
                 iconBase: '나비', 
                 desc: '꽃들의 수분을 돕는 아름다운 곤충',
                 tip: '꽃의 번식과 곤충의 공생 관계(꽃가루받이)를 설명할 때 활용하기 좋습니다.',
-                imageId: 'butterfly', 
+                imageId: '나비', 
                 steps: [
                     "색종이를 네모로 반 접었다 펴서 세로 선을 만듭니다.",
                     "대각선(세모)으로도 양쪽 모두 접었다 펴서 선을 만듭니다.",
@@ -258,6 +338,54 @@
                 ]
             },
             {
+                id: 'squirrel',
+                title: '볼이 빵빵 다람쥐',
+                itemName: '다람쥐',
+                difficulty: '고급',
+                diffClass: 'bg-red-100 text-red-700',
+                headerClass: 'bg-yellow-600',
+                iconType: 'image',
+                iconBase: '다람쥐', 
+                desc: '참나무숲을 가꾸는 숲속의 정원사',
+                tip: '도토리 종이접기와 한 쌍을 이룹니다. 동물의 씨앗 퍼뜨리기 전략을 설명해보세요.',
+                imageId: '다람쥐', 
+                steps: [
+                    "색종이를 대각선으로 반 접었다 펴서 선을 만듭니다.",
+                    "중심선에 맞춰 양옆을 접어 아이스크림 접기를 합니다.",
+                    "위쪽 삼각형의 양 끝 모서리를 중심선에 맞춰 비스듬히 한 번 더 접습니다.",
+                    "뒤집은 후, 아래 뾰족한 모서리를 위 꼭짓점을 향해 올려 접습니다.",
+                    "다시 뒤집은 후, 전체를 반으로 접습니다.",
+                    "위로 솟은 부분을 계단 접기 하여 다람쥐의 머리와 코를 만듭니다.",
+                    "엉덩이 부분의 모서리를 안쪽으로 꺾어 접어 둥글게 만듭니다.",
+                    "꼬리 부분을 위로 둥글게 말아 올리듯 꺾어 접어 풍성한 꼬리를 표현합니다.",
+                    "귀여운 눈을 그리면 도토리를 좋아하는 다람쥐 완성!"
+                ]
+            },
+            {
+                id: 'bear',
+                title: '늠름한 반달가슴곰',
+                itemName: '반달가슴곰',
+                difficulty: '고급',
+                diffClass: 'bg-red-100 text-red-700',
+                headerClass: 'bg-slate-900',
+                iconType: 'image',
+                iconBase: '반달가슴곰', 
+                desc: '우리나라 숲의 상징, 멸종위기 야생동물',
+                tip: '완성 후 하얀색 펜이나 종이로 가슴에 브이(V)자 무늬를 그려 생물 다양성에 대해 이야기해 보세요.',
+                imageId: '반달가슴곰', 
+                steps: [
+                    "검은색 색종이를 가로, 세로, 대각선으로 접었다 편 후 사각 주머니를 만듭니다.",
+                    "막힌 쪽 모서리를 중심선에 맞춰 양옆을 접었다 폅니다.",
+                    "접은 선을 따라 윗장을 위로 벌려 눌러 접어 학 접기 기본형을 만듭니다.",
+                    "위로 올라간 뾰족한 두 갈래를 아래로 비스듬히 접어 내립니다. (곰의 앞다리)",
+                    "위쪽 뾰족한 모서리를 아래로 접어 내린 후, 끝을 살짝 위로 다시 꺾어 코를 만듭니다.",
+                    "머리 양옆 모서리를 약간씩 꺾어 접어 둥근 귀를 만듭니다.",
+                    "몸통 양옆을 뒤로 접어 곰의 다부진 체격을 표현합니다.",
+                    "가슴에 하얀색 펜이나 종이로 반달 모양(V자) 무늬를 그려 넣습니다.",
+                    "지리산의 상징, 늠름한 반달가슴곰 완성!"
+                ]
+            },
+            {
                 id: 'owl',
                 title: '밤의 파수꾼 부엉이',
                 itemName: '부엉이',
@@ -268,7 +396,7 @@
                 iconBase: '부엉이', 
                 desc: '숲의 최상위 포식자이자 야행성 맹금류',
                 tip: '먹이그물(Food Web) 교육 시 최상위 포식자의 역할에 대해 토론해 보세요.',
-                imageId: 'owl', 
+                imageId: '부엉이', 
                 steps: [
                     "색종이를 대각선으로 반 접었다 펴서 선을 만듭니다.",
                     "중심선에 맞춰 양옆 가장자리를 안으로 접어 아이스크림 접기를 합니다.",
@@ -292,7 +420,7 @@
                 iconBase: '사슴벌레', 
                 desc: '참나무 수액을 좋아하는 갑충',
                 tip: '곤충의 머리, 가슴, 배 구조와 큰 턱의 용도에 대해 관찰해 보세요.',
-                imageId: 'stag-beetle', 
+                imageId: '사슴벌레', 
                 steps: [
                     "네모와 세모로 모두 접었다 편 후, 사각 주머니 기본형을 만듭니다.",
                     "양쪽을 모아 접은 후 위로 올려 접어 학 접기 기본형을 만듭니다.",
@@ -315,7 +443,7 @@
         // 카드 렌더링 함수
         function renderGrid(data) {
             const grid = document.getElementById('origami-grid');
-            grid.innerHTML = ''; // 초기화
+            grid.innerHTML = ''; 
 
             data.forEach(item => {
                 const card = document.createElement('div');
@@ -412,9 +540,9 @@
                 };
 
                 modalImage.onerror = function() {
-                    this.onerror = null; // 무한 루프 방지
+                    this.onerror = null; 
                     if (this.src.endsWith('.jpg')) {
-                        this.src = `${item.imageId}.png`; // .png로 재시도
+                        this.src = `${item.imageId}.png`; 
                         
                         this.onload = function() {
                             modalImage.classList.remove('hidden');
